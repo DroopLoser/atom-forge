@@ -3,6 +3,8 @@ from schemas.input import MoleculeInput
 from fastapi.middleware.cors import CORSMiddleware
 from rdkit import Chem
 from rdkit.Chem import QED, Crippen
+sys.path.append(os.path.join(os.path.dirname(__file__), "SA_Score"))
+import sascorer
 import sascorer   # important
 
 app = FastAPI()
