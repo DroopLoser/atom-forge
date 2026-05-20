@@ -10,5 +10,5 @@ rdkit
 numpy==1.26.4
 pandas
 pillow
-streamlit
-selfies
+sascorer
+tensorflow 
