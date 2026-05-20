@@ -1,5 +1,9 @@
 from fastapi import FastAPI
+from schemas.input import MoleculeInput
 from fastapi.middleware.cors import CORSMiddleware
+from rdkit import Chem
+from rdkit.Chem import QED, Crippen
+import sascorer   # important
 
 app = FastAPI()
 
@@ -11,15 +15,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-def home():
-    return {"message": "Backend is running"}
-
 @app.post("/predict")
-def predict(data: dict):
+def predict(data: MoleculeInput):
+
+    smiles = data.smiles.strip()
+    mol = Chem.MolFromSmiles(smiles)
+
+    if mol is None:
+        return {"error": "Invalid SMILES", "smiles": smiles}
+
     return {
-        "smiles": data["smiles"],
-        "logp": 1.2,
-        "sas": 0.5,
-        "qed": 0.8
+        "smiles": smiles,
+        "logp": float(Crippen.MolLogP(mol)),
+        "sas": float(sascorer.calculateScore(mol)),
+        "qed": float(QED.qed(mol))
     }
