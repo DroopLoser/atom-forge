@@ -10,4 +10,4 @@ rdkit
 numpy==1.26.4
 pandas
 pillow
-tensorflow 
+tensorflow==2.15.0
