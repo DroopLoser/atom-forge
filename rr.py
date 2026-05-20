@@ -1,3 +1,5 @@
+import sys
+import os
 from fastapi import FastAPI
 from schemas.input import MoleculeInput
 from fastapi.middleware.cors import CORSMiddleware
